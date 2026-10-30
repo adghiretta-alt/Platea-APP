@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 
 public class Cataleg {
@@ -12,6 +14,7 @@ public class Cataleg {
 
     public void afegirRecinte(Recinte r) {
         recintes.add(r);
+
     }
 
     public void afegirEsdeveniment(Esdeveniment e) {

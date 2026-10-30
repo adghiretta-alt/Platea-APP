@@ -1,3 +1,6 @@
+package servei;
+
+import model.*;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.HashMap;

@@ -1,8 +1,9 @@
+package model;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Esdeveniment {
-
+public class Esdeveniment{
     private String id;
     private String nom;
     private LocalDateTime dataHora;
@@ -10,6 +11,7 @@ public class Esdeveniment {
     private String descripcio;
     private String imatge;
     private Recinte recinte;
+
     private ArrayList<TipusEntrada> tipusEntrades;
 
     public Esdeveniment(String id,
@@ -37,7 +39,24 @@ public class Esdeveniment {
     public String getId() {
         return id;
     }
-
+    public String getNom() {
+        return nom;
+    }
+    public LocalDateTime getDataHora() {
+        return dataHora;
+    }
+    public String getCategoria() {
+        return categoria;
+    }
+    public String getDescripcio() {
+        return descripcio;
+    }
+    public String getImatge() {
+        return imatge;
+    }
+    public Recinte getRecinte() {
+        return recinte;
+    }   
     public ArrayList<TipusEntrada> getTipusEntrades() {
         return tipusEntrades;
     }

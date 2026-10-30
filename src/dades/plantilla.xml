@@ -17,7 +17,6 @@
     </recinte>
   </recintes>
 
-  <!-- Esdeveniments: 10 exemples complets -->
   <esdeveniments>
     <!-- Esdeveniment 1 -->
     <esdeveniment id="E1" recinte="R1">
