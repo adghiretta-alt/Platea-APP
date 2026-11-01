@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Color de fondo de tu caja -->
+    <solid android:color="#E7BAF5" />
+
+    <!-- Radio de las esquinas redondeadas -->
+    <corners android:radius="24dp" />
+    <stroke android:color="#885e9a" android:width="10dp" />
+</shape>
