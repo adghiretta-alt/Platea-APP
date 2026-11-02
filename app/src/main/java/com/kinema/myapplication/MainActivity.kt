@@ -1,5 +1,6 @@
 package com.kinema.myapplication
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
@@ -13,12 +14,14 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
+import org.json.JSONObject
 import java.io.File
 import java.lang.Exception
 import java.net.URI
 
 class MainActivity : AppCompatActivity() {
     lateinit var wsClient: KinemaWSClient
+    lateinit var servResponse: JSONObject
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             println("🔗 Codi d'estat: ${handshakedata?.httpStatus}")
             println("📝 Descripció: ${handshakedata?.httpStatusMessage}")
 
-            send("$name: start a connection")
+            send("{ 'type' : 'esdev', 'recinte' : 'R1' }")
         }
 
         override fun onMessage(message: String?) {
@@ -104,8 +107,11 @@ class MainActivity : AppCompatActivity() {
 
             // crides segures a la GUI (main thread)
             runOnUiThread {
-                val tv = findViewById<TextView>(R.id.textView)
-                tv.text = "Nou missatge: $message"
+                //val tv = findViewById<TextView>(R.id.textView)
+                //tv.text = "Nou missatge: $message"
+
+                servResponse = JSONObject(message)
+                println(servResponse)
             }
         }
 

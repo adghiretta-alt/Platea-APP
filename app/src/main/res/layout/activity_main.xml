@@ -88,7 +88,7 @@
                 android:fontFamily="@font/roboto_condensed_regular"
                 android:inputType="text"
                 android:padding="10dp"
-                android:text="wss://"
+                android:text="ws://192.168.18.13:3000"
                 android:textSize="20sp" />
         </FrameLayout>
 
