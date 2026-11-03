@@ -1,10 +1,12 @@
 package com.kinema.myapplication
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -13,27 +15,14 @@ import androidx.core.view.WindowInsetsCompat
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import org.json.JSONObject
+import java.io.File
 import java.lang.Exception
 import java.net.URI
-
-import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import java.nio.charset.StandardCharsets
-
-import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator
-import com.fasterxml.jackson.databind.SerializationFeature
+import java.Intent
 
 class MainActivity : AppCompatActivity() {
     lateinit var wsClient: KinemaWSClient
     lateinit var servResponse: JSONObject
-
-    private val xmlMapper: XmlMapper by lazy {
-        XmlMapper().apply {
-            registerKotlinModule()
-            configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true)
-            enable(SerializationFeature.INDENT_OUTPUT)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +33,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         val configXml = "CONFIG.XML"
+        val file = File(this.filesDir, configXml)
 
         val connectButton = findViewById<Button>(R.id.connectButton)
 
@@ -63,18 +52,16 @@ class MainActivity : AppCompatActivity() {
             val emailFlag = checkEmailUser(eMail)
 
             if (nameFlag && emailFlag) {
-                val configData = UserConfig(name, eMail)
-
-                val xmlString = xmlMapper.writeValueAsString(configData)
-
+                val configXmlContent = name + "\n" + eMail
                 try {
-                    openFileOutput(configXml, Context.MODE_PRIVATE).use { ofs ->
-                        ofs.write(xmlString.toByteArray(StandardCharsets.UTF_8))
+                    this.openFileOutput(configXml, Context.MODE_PRIVATE).use { ofs ->
+                        ofs.write(configXmlContent.toByteArray())
+
                     }
-                    connectWS(urlConnect, name)
                 } catch (e: Exception) {
                     Toast.makeText(this, "Someting went wrong: CONFIG.XML", Toast.LENGTH_SHORT).show()
                 }
+                connectWS(urlConnect, name)
             }
         }
     }
@@ -107,8 +94,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
     inner class KinemaWSClient(serverUri: URI, private val name: String): WebSocketClient(serverUri) {
         override fun onOpen(handshakedata: ServerHandshake?) {
             println("✅ Connectat al servidor")
@@ -117,17 +102,18 @@ class MainActivity : AppCompatActivity() {
 
             send("{ 'type' : 'esdev', 'recinte' : 'R1' }")
         }
-
         override fun onMessage(message: String?) {
             println("📥 Rebut: $message")
 
-            // crides segures a la GUI (main thread)
             runOnUiThread {
-                //val tv = findViewById<TextView>(R.id.textView)
-                //tv.text = "Nou missatge: $message"
-
-                servResponse = JSONObject(message)
-                println(servResponse)
+                if (message != null) {
+                    val json = JSONObject(message)
+                    if (json.optString("type") == "esdev") {
+                        val intent = Intent(this@MainActivity, CartelleraActivity::class.java)
+                        intent.putExtra("JSON_DATA", message)
+                        startActivity(intent)
+                    }
+                }
             }
         }
 
