@@ -18,6 +18,7 @@ import org.json.JSONObject
 import java.io.File
 import java.lang.Exception
 import java.net.URI
+import java.Intent
 
 class MainActivity : AppCompatActivity() {
     lateinit var wsClient: KinemaWSClient
@@ -32,7 +33,6 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         val configXml = "CONFIG.XML"
         val file = File(this.filesDir, configXml)
 
@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                 try {
                     this.openFileOutput(configXml, Context.MODE_PRIVATE).use { ofs ->
                         ofs.write(configXmlContent.toByteArray())
+
                     }
                 } catch (e: Exception) {
                     Toast.makeText(this, "Someting went wrong: CONFIG.XML", Toast.LENGTH_SHORT).show()
@@ -101,17 +102,18 @@ class MainActivity : AppCompatActivity() {
 
             send("{ 'type' : 'esdev', 'recinte' : 'R1' }")
         }
-
         override fun onMessage(message: String?) {
             println("📥 Rebut: $message")
 
-            // crides segures a la GUI (main thread)
             runOnUiThread {
-                //val tv = findViewById<TextView>(R.id.textView)
-                //tv.text = "Nou missatge: $message"
-
-                servResponse = JSONObject(message)
-                println(servResponse)
+                if (message != null) {
+                    val json = JSONObject(message)
+                    if (json.optString("type") == "esdev") {
+                        val intent = Intent(this@MainActivity, CartelleraActivity::class.java)
+                        intent.putExtra("JSON_DATA", message)
+                        startActivity(intent)
+                    }
+                }
             }
         }
 
