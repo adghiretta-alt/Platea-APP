@@ -1,12 +1,10 @@
 package com.kinema.myapplication
 
-import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,14 +13,28 @@ import androidx.core.view.WindowInsetsCompat
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import org.json.JSONObject
-import java.io.File
 import java.lang.Exception
 import java.net.URI
-import java.Intent
+import android.content.Intent
+
+import com.fasterxml.jackson.dataformat.xml.XmlMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import java.nio.charset.StandardCharsets
+
+import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator
+import com.fasterxml.jackson.databind.SerializationFeature
 
 class MainActivity : AppCompatActivity() {
     lateinit var wsClient: KinemaWSClient
     lateinit var servResponse: JSONObject
+
+    private val xmlMapper: XmlMapper by lazy {
+        XmlMapper().apply {
+            registerKotlinModule()
+            configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true)
+            enable(SerializationFeature.INDENT_OUTPUT)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +45,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         val configXml = "CONFIG.XML"
-        val file = File(this.filesDir, configXml)
 
         val connectButton = findViewById<Button>(R.id.connectButton)
 
@@ -52,16 +64,18 @@ class MainActivity : AppCompatActivity() {
             val emailFlag = checkEmailUser(eMail)
 
             if (nameFlag && emailFlag) {
-                val configXmlContent = name + "\n" + eMail
-                try {
-                    this.openFileOutput(configXml, Context.MODE_PRIVATE).use { ofs ->
-                        ofs.write(configXmlContent.toByteArray())
+                val configData = UserConfig(name, eMail)
 
+                val xmlString = xmlMapper.writeValueAsString(configData)
+
+                try {
+                    openFileOutput(configXml, Context.MODE_PRIVATE).use { ofs ->
+                        ofs.write(xmlString.toByteArray(StandardCharsets.UTF_8))
                     }
+                    connectWS(urlConnect, name)
                 } catch (e: Exception) {
                     Toast.makeText(this, "Someting went wrong: CONFIG.XML", Toast.LENGTH_SHORT).show()
                 }
-                connectWS(urlConnect, name)
             }
         }
     }
@@ -94,24 +108,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
     inner class KinemaWSClient(serverUri: URI, private val name: String): WebSocketClient(serverUri) {
         override fun onOpen(handshakedata: ServerHandshake?) {
             println("✅ Connectat al servidor")
-            println("🔗 Codi d'estat: ${handshakedata?.httpStatus}")
-            println("📝 Descripció: ${handshakedata?.httpStatusMessage}")
-
-            send("{ 'type' : 'esdev', 'recinte' : 'R1' }")
+            val jsonRequest = JSONObject().apply {
+                put("type", "esdev")
+                put("recinte", "")
+            }
+            send(jsonRequest.toString())
         }
+
         override fun onMessage(message: String?) {
             println("📥 Rebut: $message")
 
             runOnUiThread {
                 if (message != null) {
-                    val json = JSONObject(message)
-                    if (json.optString("type") == "esdev") {
-                        val intent = Intent(this@MainActivity, CartelleraActivity::class.java)
-                        intent.putExtra("JSON_DATA", message)
-                        startActivity(intent)
+                    try {
+                        servResponse = JSONObject(message)
+
+                        if (servResponse.optString("type") == "esdev") {
+                            val intent = Intent(this@MainActivity,CartelleraActivity::class.java)
+                            intent.putExtra("JSON_DATA", message)
+                            startActivity(intent)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
                 }
             }
