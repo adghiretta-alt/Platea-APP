@@ -33,7 +33,10 @@ android {
 }
 
 dependencies {
-
+    implementation("javax.xml.stream:stax-api:1.0-2")
+    implementation("com.fasterxml.woodstox:woodstox-core:6.5.1")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.2")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
