@@ -1,8 +1,10 @@
 package com.kinema.myapplication
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Patterns
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -10,18 +12,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.dataformat.xml.XmlMapper
+import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import com.google.android.material.snackbar.Snackbar
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import org.json.JSONObject
-import java.lang.Exception
 import java.net.URI
-
-import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.nio.charset.StandardCharsets
-
-import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator
-import com.fasterxml.jackson.databind.SerializationFeature
 
 class MainActivity : AppCompatActivity() {
     lateinit var wsClient: KinemaWSClient
@@ -94,28 +94,25 @@ class MainActivity : AppCompatActivity() {
             wsClient = KinemaWSClient(uri, name)
             wsClient.connect()
         } catch (e: Exception) {
-            Toast.makeText(this, "URL wrong!", Toast.LENGTH_SHORT).show()
+            showToast("URL Wrong!", false)
         }
 
     }
 
-    fun sendCheckConnection(userName: String) {
-        if (wsClient.isOpen) {
-            wsClient.send(userName + ": start a connection")
-        } else {
-            Toast.makeText(this, "Something went wrong: CONNECTION", Toast.LENGTH_SHORT).show()
-        }
+    fun showToast(msg: String, success: Boolean) {
+        val root = findViewById<View>(R.id.main)  // ya lo tienes en onCreate
+        Snackbar.make(root, msg, Snackbar.LENGTH_LONG)
+            .setBackgroundTint(if (success) Color.parseColor("#4CAF50") else Color.parseColor("#F44336"))
+            .setTextColor(Color.WHITE)
+            .show()
     }
-
-
 
     inner class KinemaWSClient(serverUri: URI, private val name: String): WebSocketClient(serverUri) {
-        override fun onOpen(handshakedata: ServerHandshake?) {
-            println("✅ Connectat al servidor")
-            println("🔗 Codi d'estat: ${handshakedata?.httpStatus}")
-            println("📝 Descripció: ${handshakedata?.httpStatusMessage}")
+        private val K_TYPE = "type";
 
-            send("{ 'type' : 'esdev', 'recinte' : 'R1' }")
+        override fun onOpen(handshakedata: ServerHandshake?) {
+            showToast("Connection successe", true)
+            send("{ 'type' : 'esdev' }")
         }
 
         override fun onMessage(message: String?) {
@@ -127,6 +124,13 @@ class MainActivity : AppCompatActivity() {
                 //tv.text = "Nou missatge: $message"
 
                 servResponse = JSONObject(message)
+                when (servResponse.optString(K_TYPE)) {
+                    "esdev" -> {
+                        val esdeveniments = servResponse.optJSONArray("esdeveniment")
+
+                    }
+                    else -> {}
+                }
                 println(servResponse)
             }
         }
@@ -137,7 +141,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onError(ex: Exception?) {
-            println("❌ Error: ${ex?.message}")
+            showToast("Conection not successe: ${ex?.message}", false)
             ex?.printStackTrace()
         }
 
