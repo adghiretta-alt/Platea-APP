@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.json.JSONObject
+import android.widget.TextView
 
 class CartelleraActivity : AppCompatActivity() {
 
@@ -13,6 +14,10 @@ class CartelleraActivity : AppCompatActivity() {
         setContentView(R.layout.activity_cartellera)
 
         val recycler = findViewById<RecyclerView>(R.id.recyclerEvents)
+
+        val tvCistella = findViewById<TextView>(R.id.tvCistella)
+        tvCistella.text = "Cistella: ${Cistella.entrades.size}"
+
         recycler.layoutManager = LinearLayoutManager(this)
 
         // Recibir el JSON enviado desde MainActivity
