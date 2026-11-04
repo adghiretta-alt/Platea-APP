@@ -22,13 +22,13 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="260dp"
+            android:layout_height="97dp"
             android:layout_marginTop="30dp"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center_vertical"
             android:text="Kinema"
-            android:textSize="96sp" />
+            android:textSize="75sp" />
 
         <Space
             android:layout_width="match_parent"
@@ -36,9 +36,11 @@
             android:layout_weight="1" />
 
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/edit_text_round_corner">
 
             <EditText
@@ -55,9 +57,11 @@
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/edit_text_round_corner">
 
             <EditText
@@ -74,9 +78,11 @@
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/edit_text_round_corner">
 
             <EditText
@@ -99,7 +105,7 @@
 
         <Button
             android:id="@+id/connectButton"
-            android:layout_width="321dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:backgroundTint="#885e9a"
