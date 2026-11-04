@@ -34,10 +34,9 @@ class EsdevenimentsAdapter(
         if (isSelected) {
             val sb = StringBuilder("Tipus d'entrades:\n")
             for (entrada in item.tipusEntrades) {
-                if (entrada.nom.uppercase().contains("GENERAL")) {
+                if (entrada.zona.tipus.equals("general", ignoreCase = true)) {
                     sb.append("• ${entrada.nom}: ${entrada.preu}€\n")
                 }
-
             }
             holder.tvEntrades.text = sb.toString().trim()
             holder.tvEntrades.visibility = View.VISIBLE
