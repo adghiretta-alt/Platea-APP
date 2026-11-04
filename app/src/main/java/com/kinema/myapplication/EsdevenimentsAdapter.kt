@@ -45,7 +45,6 @@ class EsdevenimentsAdapter(
         // Si el evento está seleccionado, mostrar sus entradas generales
         if (isSelected) {
 
-            // Mostrar las entradas del evento
             holder.tvEntrades.visibility = View.VISIBLE
             holder.tvEntrades.text = "Tipus d'entrades:"
 
@@ -53,7 +52,7 @@ class EsdevenimentsAdapter(
             for (entrada in item.tipusEntrades) {
 
                 // Mostrar solamente las entradas generales
-                if (entrada.zona.equals("general", ignoreCase = true)) {
+                if (entrada.nom.uppercase().contains("GENERAL")) {
 
                     // Crear un TextView para cada tipo de entrada
                     val tvEntrada = TextView(holder.itemView.context)
