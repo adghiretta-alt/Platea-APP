@@ -15,6 +15,7 @@ import org.java_websocket.handshake.ServerHandshake
 import org.json.JSONObject
 import java.lang.Exception
 import java.net.URI
+import android.content.Intent
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
@@ -112,22 +113,30 @@ class MainActivity : AppCompatActivity() {
     inner class KinemaWSClient(serverUri: URI, private val name: String): WebSocketClient(serverUri) {
         override fun onOpen(handshakedata: ServerHandshake?) {
             println("✅ Connectat al servidor")
-            println("🔗 Codi d'estat: ${handshakedata?.httpStatus}")
-            println("📝 Descripció: ${handshakedata?.httpStatusMessage}")
-
-            send("{ 'type' : 'esdev', 'recinte' : 'R1' }")
+            val jsonRequest = JSONObject().apply {
+                put("type", "esdev")
+                put("recinte", "")
+            }
+            send(jsonRequest.toString())
         }
 
         override fun onMessage(message: String?) {
             println("📥 Rebut: $message")
 
-            // crides segures a la GUI (main thread)
             runOnUiThread {
-                //val tv = findViewById<TextView>(R.id.textView)
-                //tv.text = "Nou missatge: $message"
+                if (message != null) {
+                    try {
+                        servResponse = JSONObject(message)
 
-                servResponse = JSONObject(message)
-                println(servResponse)
+                        if (servResponse.optString("type") == "esdev") {
+                            val intent = Intent(this@MainActivity,CartelleraActivity::class.java)
+                            intent.putExtra("JSON_DATA", message)
+                            startActivity(intent)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
             }
         }
 
