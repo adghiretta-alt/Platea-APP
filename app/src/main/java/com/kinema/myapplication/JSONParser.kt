@@ -26,6 +26,7 @@ object JSONParser {
                         id = eObj.optString("id"),
                         nom = eObj.optString("nom"),
                         zona = eObj.optString("zona"),
+                        tipoZona = eObj.optString("tipoZona"),
                         preu = eObj.optDouble("preu", 0.0),
                         quota = eObj.optInt("quota", 0)
                     )

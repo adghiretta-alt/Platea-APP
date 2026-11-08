@@ -31,4 +31,11 @@
         android:textSize="14sp"
         android:textColor="#1B5E20" />
 
+    <!-- Botón para eliminar la entrada de la cesta -->
+    <Button
+        android:id="@+id/btnEliminarEntrada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eliminar" />
+
 </LinearLayout>

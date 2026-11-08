@@ -1,5 +1,7 @@
 package com.kinema.myapplication
 
-class UserConfig (val name: String = "", val email: String = "") {
-
-}
+data class UserConfig(
+    val nombre: String,
+    val correo: String,
+    val servidor: String
+)

@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="platea_morat">#885E9A</color>
+    <color name="platea_lila">#C292D7</color>
+    <color name="platea_lila_clar">#E7BAF5</color>
+    <color name="platea_fons">#EAD4F1</color>
+
 </resources>
