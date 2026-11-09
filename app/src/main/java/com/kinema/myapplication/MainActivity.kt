@@ -28,6 +28,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var wsClient: KinemaWSClient
     lateinit var servResponse: JSONObject
 
+    // Correo del comprador.
+    var emailUsuario = ""
+
     private val xmlMapper: XmlMapper by lazy {
         XmlMapper().apply {
             registerKotlinModule()
@@ -79,6 +82,8 @@ class MainActivity : AppCompatActivity() {
             val emailFlag = checkEmailUser(eMail)
 
             if (nameFlag && emailFlag) {
+                emailUsuario = eMail
+
                 val configData = UserConfig(name, eMail, urlConnect)
 
                 val xmlString = xmlMapper.writeValueAsString(configData)
@@ -111,6 +116,7 @@ class MainActivity : AppCompatActivity() {
             val uri = URI(urlConect)
             wsClient = KinemaWSClient(uri, name)
             WebSocketManager.client = wsClient
+
             wsClient.connect()
         } catch (e: Exception) {
             Toast.makeText(this, "URL wrong!", Toast.LENGTH_SHORT).show()
@@ -155,6 +161,10 @@ class MainActivity : AppCompatActivity() {
 
                             "purchase" -> {
                                 WebSocketManager.respuestaCompra?.invoke(message)
+                            }
+                            // Recibir las entradas del comprador.
+                            "myTickets" -> {
+                                WebSocketManager.respuestaEntrades?.invoke(message)
                             }
                         }
                     } catch (e: Exception) {

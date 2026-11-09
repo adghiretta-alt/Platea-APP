@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.json.JSONObject
 import android.widget.TextView
+import android.widget.Button
+import android.widget.Toast
+import android.content.Intent
 
 class CartelleraActivity : AppCompatActivity() {
 
@@ -19,6 +22,38 @@ class CartelleraActivity : AppCompatActivity() {
         // Obtenemos los elementos de la pantalla
         val recycler = findViewById<RecyclerView>(R.id.recyclerEvents)
         tvCistella = findViewById(R.id.tvCistella)
+
+        // Botón para consultar las entradas compradas.
+        val btnMisEntrades = findViewById<Button>(R.id.btnMisEntrades)
+
+        btnMisEntrades.setOnClickListener {
+
+            // Comprobar que tenemos conexión con el servidor.
+            if (WebSocketManager.client != null && WebSocketManager.client!!.isOpen) {
+
+                // Preparar la recepción de las entradas.
+                WebSocketManager.respuestaEntrades = { respuesta ->
+
+                    val intent = Intent(this, MisEntradesActivity::class.java)
+                    intent.putExtra("JSON_ENTRADES", respuesta)
+                    startActivity(intent)
+
+                    // Limpiar la respuesta para no reutilizarla.
+                    WebSocketManager.respuestaEntrades = null
+                }
+
+                // Preparar la petición al servidor.
+                val request = JSONObject()
+                request.put("type", "myTickets")
+                request.put("correo", WebSocketManager.correo)
+
+                // Enviar la petición.
+                WebSocketManager.client!!.send(request.toString())
+
+            } else {
+                Toast.makeText(this, "No hay conexión con el servidor", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         // Actualizamos el contador de entradas
         actualizarCistella()

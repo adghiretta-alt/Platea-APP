@@ -7,4 +7,5 @@ object WebSocketManager {
     var nombre: String = ""
     var correo: String = ""
     var respuestaCompra: ((String) -> Unit)? = null
+    var respuestaEntrades: ((String) -> Unit)? = null
 }

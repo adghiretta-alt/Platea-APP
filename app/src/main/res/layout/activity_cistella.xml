@@ -6,7 +6,6 @@
     android:padding="20dp"
     android:background="#c292d7">
 
-    <!-- Contenedor principal de la cesta -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,7 +13,6 @@
         android:padding="16dp"
         android:background="@drawable/layout_vertical_round_corner">
 
-        <!-- Título de la pantalla -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,14 +24,12 @@
             android:textStyle="bold"
             android:gravity="center" />
 
-        <!-- Lista donde aparecerán las entradas añadidas -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerCistella"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <!-- Mostrar el precio total de todas las entradas -->
         <TextView
             android:id="@+id/tvTotalCistella"
             android:layout_width="match_parent"
