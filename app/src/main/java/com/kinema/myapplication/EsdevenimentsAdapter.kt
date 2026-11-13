@@ -50,9 +50,8 @@ class EsdevenimentsAdapter(
 
             // Recorrer los tipos de entrada del evento
             for (entrada in item.tipusEntrades) {
-
                 // Mostrar solamente las entradas generales
-                if (entrada.nom.uppercase().contains("GENERAL")) {
+                if (entrada.tipoZona.equals("general", ignoreCase = true)) {
 
                     // Crear un TextView para cada tipo de entrada
                     val tvEntrada = TextView(holder.itemView.context)

@@ -26,12 +26,13 @@
             </intent-filter>
         </activity>
 
-        <!-- REGISTRO DE LA SEGUNDA PANTALLA -->
         <activity
             android:name=".CartelleraActivity"
             android:exported="false" />
 
-        <!-- REGISTRO DE LA PANTALLA DE LA CESTA -->
+        <activity
+            android:name=".MisEntradesActivity" />
+
         <activity
             android:name=".CistellaActivity"
             android:exported="false" />

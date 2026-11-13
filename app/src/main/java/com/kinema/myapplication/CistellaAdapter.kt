@@ -4,13 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 
 class CistellaAdapter(
-    private val llista: List<EntradaCistella>
+    private val llista: MutableList<EntradaCistella>,
+    private val actualitzarTotal: () -> Unit
 ) : RecyclerView.Adapter<CistellaAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
         val tvNomEsdeveniment: TextView =
             view.findViewById(R.id.tvNomEsdeveniment)
 
@@ -19,6 +22,9 @@ class CistellaAdapter(
 
         val tvQuantitatPreu: TextView =
             view.findViewById(R.id.tvQuantitatPreu)
+
+        val btnEliminar: Button =
+            view.findViewById(R.id.btnEliminarEntrada)
     }
 
     // Crear la vista de cada entrada de la cesta
@@ -45,6 +51,19 @@ class CistellaAdapter(
         // Mostrar cantidad, precio por entrada y subtotal
         holder.tvQuantitatPreu.text =
             "${item.quantitat} x ${item.entrada.preu}€ = ${total}€"
+
+        // Eliminar la entrada seleccionada de la cesta
+        holder.btnEliminar.setOnClickListener {
+            val posicion = holder.adapterPosition
+
+            if (posicion != RecyclerView.NO_POSITION) {
+                llista.removeAt(posicion)
+                notifyItemRemoved(posicion)
+
+                // Actualizar el precio total
+                actualitzarTotal()
+            }
+        }
     }
 
     // Devolver el número de elementos de la cesta
