@@ -39,7 +39,8 @@ class EntradesAdapter(
             texto += "Seient: No en té\n"
         }
 
-        texto += "Titular: ${entrada.titular}"
+        texto += "Titular: ${entrada.titular}\n"
+        texto+= "Localitzador: ${entrada.localitzador}"
 
         holder.tvDatosEntrada.text = texto
     }

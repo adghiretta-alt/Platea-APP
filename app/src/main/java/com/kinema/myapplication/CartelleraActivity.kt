@@ -9,8 +9,13 @@ import android.widget.TextView
 import android.widget.Button
 import android.widget.Toast
 import android.content.Intent
+import android.widget.ImageButton
 
 class CartelleraActivity : AppCompatActivity() {
+
+    companion object {
+        var estaAbierta = false
+    }
 
     // Variable que muestra el número de entradas de la cesta
     private lateinit var tvCistella: TextView
@@ -18,6 +23,14 @@ class CartelleraActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cartellera)
+        // Recuperamos el icono de configuración.
+        val btnConfiguracio = findViewById<ImageButton>(R.id.btnConfiguracio)
+
+        // Abrimos la pantalla de configuración al pulsarlo.
+        btnConfiguracio.setOnClickListener {
+            val intent = Intent(this, ConfigActivity::class.java)
+            startActivity(intent)
+        }
 
         // Obtenemos los elementos de la pantalla
         val recycler = findViewById<RecyclerView>(R.id.recyclerSeients)
@@ -67,6 +80,16 @@ class CartelleraActivity : AppCompatActivity() {
         // Configuramos la lista de eventos
         recycler.layoutManager = LinearLayoutManager(this)
 
+        // Registra la recepción de nuevas respuestas de la cartelera.
+        WebSocketManager.respuestaCartelera = { respuesta ->
+            val jsonObj = JSONObject(respuesta)
+            val llistaEsdeveniments = JSONParser.parseEsdeveniments(jsonObj)
+
+            recycler.adapter = EsdevenimentsAdapter(llistaEsdeveniments) {
+                actualizarCistella()
+            }
+        }
+
         // Recuperamos los datos de los eventos enviados desde MainActivity
         val jsonStr = intent.getStringExtra("JSON_DATA")
 
@@ -95,5 +118,22 @@ class CartelleraActivity : AppCompatActivity() {
         if (::tvCistella.isInitialized) {
             actualizarCistella()
         }
+    }
+    // Indica que la cartelera está abierta.
+    override fun onStart() {
+        super.onStart()
+        estaAbierta = true
+    }
+
+    // Indica que la cartelera está cerrada.
+    override fun onStop() {
+        super.onStop()
+        estaAbierta = false
+    }
+
+    // Libera la referencia al cerrar la cartelera.
+    override fun onDestroy() {
+        super.onDestroy()
+        WebSocketManager.respuestaCartelera = null
     }
 }

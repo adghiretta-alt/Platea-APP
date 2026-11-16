@@ -13,18 +13,18 @@ class MisEntradesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mis_entrades)
 
-        // Obtenemos los elementos de la pantalla.
+        // Obtener los elementos de la pantalla.
         val recycler = findViewById<RecyclerView>(R.id.recyclerEntrades)
 
-        // Configuramos la lista de entradas.
+        // Configura la lista de entradas.
         recycler.layoutManager = LinearLayoutManager(this)
 
-        // Recuperamos la respuesta enviada desde CartelleraActivity.
+        // Recupera la respuesta enviada desde CartelleraActivity.
         val jsonStr = intent.getStringExtra("JSON_ENTRADES")
 
         if (jsonStr != null) {
 
-            // Convertimos la respuesta en un objeto JSON.
+            // Converte la respuesta en un objeto JSON.
             val resposta = JSONObject(jsonStr)
 
             if (resposta.optString("status") == "OK") {
@@ -32,12 +32,12 @@ class MisEntradesActivity : AppCompatActivity() {
                 val entradesJSON = resposta.getJSONArray("entrades")
                 val llistaEntrades = mutableListOf<Entrada>()
 
-                // Recorremos las entradas recibidas.
+                // Recorre las entradas recibidas.
                 for (i in 0 until entradesJSON.length()) {
 
                     val entrada = entradesJSON.getJSONObject(i)
 
-                    // Recuperamos la fila y el número si existen.
+                    // Recupera la fila y el número si existen.
                     val filaJSON = entrada.opt("fila")
                     val numeroJSON = entrada.opt("numero")
 
@@ -53,14 +53,16 @@ class MisEntradesActivity : AppCompatActivity() {
                         numeroJSON.toString()
                     }
 
-                    // Creamos la entrada.
+                    // Crea la entrada.
                     val novaEntrada = Entrada(
                         esdeveniment = entrada.optString("esdeveniment"),
                         tipusEntrada = entrada.optString("tipusEntrada"),
                         titular = entrada.optString("titular"),
                         fila = fila,
                         numero = numero,
-                        tipusZona = entrada.optString("tipusZona")
+                        tipusZona = entrada.optString("tipusZona"),
+                        localitzador = entrada.optString("localitzador")
+
                     )
 
                     llistaEntrades.add(novaEntrada)

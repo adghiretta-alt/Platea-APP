@@ -48,6 +48,10 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        // Permitir que otras pantallas puedan solicitar una reconexión.
+        WebSocketManager.reconectar = { nuevaUrl, nuevoNombre ->
+            connectWS(nuevaUrl, nuevoNombre)
+        }
 
         val configXml = "CONFIG.XML"
 
@@ -113,15 +117,21 @@ class MainActivity : AppCompatActivity() {
 
     fun connectWS(urlConect: String, name: String) {
         try {
+            // Cerramos la conexión anterior.
+            WebSocketManager.client?.close()
+
             val uri = URI(urlConect)
+
+            // Creamos una conexión nueva.
             wsClient = KinemaWSClient(uri, name)
             WebSocketManager.client = wsClient
 
+            // Iniciamos la conexión.
             wsClient.connect()
-        } catch (e: Exception) {
-            Toast.makeText(this, "URL wrong!", Toast.LENGTH_SHORT).show()
-        }
 
+        } catch (e: Exception) {
+            Toast.makeText(this, "URL incorrecta", Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun sendCheckConnection(userName: String) {
@@ -154,9 +164,11 @@ class MainActivity : AppCompatActivity() {
 
                         when (servResponse.optString("type")) {
                             "esdev" -> {
-                                val intent = Intent(this@MainActivity, CartelleraActivity::class.java)
-                                intent.putExtra("JSON_DATA", message)
-                                startActivity(intent)
+                                if (!CartelleraActivity.estaAbierta) {
+                                    val intent = Intent(this@MainActivity, CartelleraActivity::class.java)
+                                    intent.putExtra("JSON_DATA", message)
+                                    startActivity(intent)
+                                }
                             }
 
                             "purchase" -> {
