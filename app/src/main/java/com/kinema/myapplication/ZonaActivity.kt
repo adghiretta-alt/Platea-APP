@@ -26,8 +26,10 @@ class ZonaActivity : AppCompatActivity() {
 
         val recycler = findViewById<RecyclerView>(R.id.recyclerSeients)
         val btnComprar = findViewById<Button>(R.id.btnComprarEntrades)
+        val esdevName = findViewById<TextView>(R.id.tvCistella)
         val esdevId = intent.getStringExtra("esdevId")!!
         val esdevNom = intent.getStringExtra("esdevNom")!!
+        esdevName.text = esdevNom
         @Suppress("DEPRECATION")
         val entrada = intent.getSerializableExtra("entrada") as TipusEntrada
 
