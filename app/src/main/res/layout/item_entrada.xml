@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="15dp"
+    android:padding="18dp"
     android:layout_marginBottom="10dp"
-    android:background="@drawable/layout_vertical_round_corner">
+    android:background="@drawable/bg_item_cistella">
 
     <TextView
         android:id="@+id/tvDatosEntrada"
