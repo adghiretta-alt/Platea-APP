@@ -59,14 +59,20 @@ class CistellaActivity : AppCompatActivity() {
                 // Recorremos las entradas que hay en la cesta
                 for (entrada in Cistella.entrades) {
 
-                    // Creamos un objeto JSON con los datos de cada entrada
                     val entradaJSON = JSONObject()
-
                     entradaJSON.put("esdevenimentId", entrada.esdevenimentId)
                     entradaJSON.put("tipusEntradaId", entrada.entrada.id)
                     entradaJSON.put("quantitat", entrada.quantitat)
 
-                    // Añadimos la entrada a la lista JSON
+                    val seientsJSON = JSONArray()
+                    for (seient in entrada.seients) {
+                        val parella = JSONArray()
+                        parella.put(seient.first)    // fila
+                        parella.put(seient.second)   // numero
+                        seientsJSON.put(parella)
+                    }
+                    entradaJSON.put("seients", seientsJSON)
+
                     entradasJSON.put(entradaJSON)
                 }
 
@@ -127,6 +133,34 @@ class CistellaActivity : AppCompatActivity() {
                             btnValidar.isEnabled = false
 
                         } else {
+
+                            // Marcamos las entradas de la cesta con asientos no disponibles
+                            val seientsError = respuesta.optJSONArray("seientsError")
+
+                            val claus = ArrayList<String>()
+
+                            if (seientsError != null) {
+                                for (i in 0 until seientsError.length()) {
+                                    claus.add(seientsError.getString(i))
+                                }
+                            }
+
+                            for (entrada in Cistella.entrades) {
+
+                                var afectada = false
+
+                                for (seient in entrada.seients) {
+                                    if (claus.contains("${entrada.entrada.zona}-${seient.first}-${seient.second}")) {
+                                        afectada = true
+                                        break
+                                    }
+                                }
+
+                                entrada.error = afectada
+                            }
+
+                            // Actualizamos la lista para mostrar u ocultar los errores
+                            recycler.adapter?.notifyDataSetChanged()
 
                             // Mostramos un diálogo con el error de la compra
                             AlertDialog.Builder(this)

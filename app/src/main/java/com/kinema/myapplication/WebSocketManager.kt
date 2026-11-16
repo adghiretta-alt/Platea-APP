@@ -8,4 +8,5 @@ object WebSocketManager {
     var correo: String = ""
     var respuestaCompra: ((String) -> Unit)? = null
     var respuestaEntrades: ((String) -> Unit)? = null
+    var respuestaMapa: ((String) -> Unit)? = null
 }

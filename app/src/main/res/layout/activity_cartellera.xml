@@ -42,18 +42,16 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btnMisEntrades"
+            android:id="@+id/btnComprarEntrades"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="Les meves entrades" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerEvents"
-            android:layout_width="326dp"
-            android:layout_height="625dp"
-            android:paddingBottom="10dp"
-            android:clipToPadding="false"/>
+            android:id="@+id/recyclerSeients"
+            android:layout_width="330dp"
+            android:layout_height="500dp" />
 
     </LinearLayout>
 

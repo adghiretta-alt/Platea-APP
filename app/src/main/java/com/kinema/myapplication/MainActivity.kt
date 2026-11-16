@@ -162,6 +162,11 @@ class MainActivity : AppCompatActivity() {
                             "purchase" -> {
                                 WebSocketManager.respuestaCompra?.invoke(message)
                             }
+
+                            "mapa" -> {
+                                WebSocketManager.respuestaMapa?.invoke(message)
+                            }
+
                             // Recibir las entradas del comprador.
                             "myTickets" -> {
                                 WebSocketManager.respuestaEntrades?.invoke(message)

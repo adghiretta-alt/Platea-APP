@@ -1,5 +1,6 @@
 package com.kinema.myapplication
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,29 +52,38 @@ class EsdevenimentsAdapter(
             // Recorrer los tipos de entrada del evento
             for (entrada in item.tipusEntrades) {
                 // Mostrar solamente las entradas generales
-                if (entrada.tipoZona.equals("general", ignoreCase = true)) {
+                // Crear un TextView para cada tipo de entrada
+                val tvEntrada = TextView(holder.itemView.context)
 
-                    // Crear un TextView para cada tipo de entrada
-                    val tvEntrada = TextView(holder.itemView.context)
+                tvEntrada.text = "• ${entrada.nom}: ${entrada.preu}€"
+                tvEntrada.textSize = 14f
+                tvEntrada.setTextColor(
+                    android.graphics.Color.parseColor("#1B5E20")
+                )
+                tvEntrada.setPadding(0, 8, 0, 8)
 
-                    tvEntrada.text = "• ${entrada.nom}: ${entrada.preu}€"
-                    tvEntrada.textSize = 14f
-                    tvEntrada.setTextColor(
-                        android.graphics.Color.parseColor("#1B5E20")
-                    )
-                    tvEntrada.setPadding(0, 8, 0, 8)
-
-                    // Al pulsar una entrada, añadirla a la cesta
-                    tvEntrada.setOnClickListener {
+                // Al pulsar una entrada, añadirla a la cesta
+                tvEntrada.setOnClickListener {
+                    if (entrada.tipoZona.equals("general", ignoreCase = true)) {
+                        // comportament actual, sense canvis
                         Cistella.afegir(item, entrada)
-
-                        // Actualizar el contador de la cesta
                         onCistellaChanged()
+                    } else {
+                        // entrada numerada → obrir la graella de seients
+                        val intent = Intent(
+                            holder.itemView.context,
+                            ZonaActivity::class.java
+                        ).apply {
+                            putExtra("esdevId", item.id)
+                            putExtra("esdevNom", item.nom)
+                            putExtra("entrada", entrada)
+                        }
+                        holder.itemView.context.startActivity(intent)
                     }
-
-                    // Añadir la entrada a la vista del evento
-                    holder.layout.addView(tvEntrada)
                 }
+
+                // Añadir la entrada a la vista del evento
+                holder.layout.addView(tvEntrada)
             }
 
         } else {

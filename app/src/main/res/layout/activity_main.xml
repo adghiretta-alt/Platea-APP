@@ -94,7 +94,7 @@
                 android:fontFamily="@font/roboto_condensed_regular"
                 android:inputType="text"
                 android:padding="10dp"
-                android:text="ws://192.168.18.13:3000"
+                android:text="wss://platea4.ieti.site:443"
                 android:textSize="20sp" />
         </FrameLayout>
 

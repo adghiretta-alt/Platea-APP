@@ -23,6 +23,12 @@ class CistellaAdapter(
         val tvQuantitatPreu: TextView =
             view.findViewById(R.id.tvQuantitatPreu)
 
+        val tvSeients: TextView =
+            view.findViewById(R.id.tvSeients)
+
+        val tvError: TextView =
+            view.findViewById(R.id.tvError)
+
         val btnEliminar: Button =
             view.findViewById(R.id.btnEliminarEntrada)
     }
@@ -51,6 +57,17 @@ class CistellaAdapter(
         // Mostrar cantidad, precio por entrada y subtotal
         holder.tvQuantitatPreu.text =
             "${item.quantitat} x ${item.entrada.preu}€ = ${total}€"
+
+        holder.tvSeients.text =
+            item.seientLabel
+
+        // Mostrar el error si la última compra de esta entrada falló
+        if (item.error) {
+            holder.tvError.visibility = View.VISIBLE
+            holder.tvError.text = "Seients no disponibles"
+        } else {
+            holder.tvError.visibility = View.GONE
+        }
 
         // Eliminar la entrada seleccionada de la cesta
         holder.btnEliminar.setOnClickListener {

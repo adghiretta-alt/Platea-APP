@@ -36,6 +36,8 @@
         <activity
             android:name=".CistellaActivity"
             android:exported="false" />
+        <activity
+            android:name=".ZonaActivity" />
 
     </application>
 

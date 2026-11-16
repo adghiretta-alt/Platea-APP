@@ -7,4 +7,4 @@ data class TipusEntrada(
     val tipoZona: String,
     val preu: Double,
     val quota: Int
-)
+) : java.io.Serializable

@@ -20,11 +20,11 @@ class CartelleraActivity : AppCompatActivity() {
         setContentView(R.layout.activity_cartellera)
 
         // Obtenemos los elementos de la pantalla
-        val recycler = findViewById<RecyclerView>(R.id.recyclerEvents)
+        val recycler = findViewById<RecyclerView>(R.id.recyclerSeients)
         tvCistella = findViewById(R.id.tvCistella)
 
         // Botón para consultar las entradas compradas.
-        val btnMisEntrades = findViewById<Button>(R.id.btnMisEntrades)
+        val btnMisEntrades = findViewById<Button>(R.id.btnComprarEntrades)
 
         btnMisEntrades.setOnClickListener {
 
