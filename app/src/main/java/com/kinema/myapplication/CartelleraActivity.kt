@@ -18,7 +18,7 @@ class CartelleraActivity : AppCompatActivity() {
     }
 
     // Variable que muestra el número de entradas de la cesta
-    private lateinit var tvCistella: TextView
+    private lateinit var btnCistella: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ class CartelleraActivity : AppCompatActivity() {
 
         // Obtenemos los elementos de la pantalla
         val recycler = findViewById<RecyclerView>(R.id.recyclerSeients)
-        tvCistella = findViewById(R.id.tvCistella)
+        btnCistella = findViewById(R.id.btnCistella)
 
         // Botón para consultar las entradas compradas.
         val btnMisEntrades = findViewById<Button>(R.id.btnComprarEntrades)
@@ -72,7 +72,7 @@ class CartelleraActivity : AppCompatActivity() {
         actualizarCistella()
 
         // Abrimos la cesta cuando pulsamos sobre su contador
-        tvCistella.setOnClickListener {
+        btnCistella.setOnClickListener {
             val intent = android.content.Intent(this, CistellaActivity::class.java)
             startActivity(intent)
         }
@@ -107,7 +107,7 @@ class CartelleraActivity : AppCompatActivity() {
 
     // Actualizamos el contador con el número actual de entradas
     private fun actualizarCistella() {
-        tvCistella.text = "Cistella: ${Cistella.totalElements()}"
+        btnCistella.text = Cistella.totalElements().toString()
     }
 
     // Se ejecuta cuando volvemos a la cartelera
@@ -115,7 +115,7 @@ class CartelleraActivity : AppCompatActivity() {
         super.onResume()
 
         // Actualizamos el contador al regresar de la cesta
-        if (::tvCistella.isInitialized) {
+        if (::btnCistella.isInitialized) {
             actualizarCistella()
         }
     }

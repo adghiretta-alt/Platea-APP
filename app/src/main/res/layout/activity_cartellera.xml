@@ -33,15 +33,6 @@
             android:textSize="40sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tvCistella"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Cistella: 0"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
         <Button
             android:id="@+id/btnComprarEntrades"
             android:layout_width="wrap_content"
@@ -72,10 +63,26 @@
         app:srcCompat="@drawable/ic_configuracio"
         app:tint="#885e9a" />
 
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </FrameLayout>
+
+
+    <Button
+        android:id="@+id/btnCistella"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:text="0"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:backgroundTint="#885E9A"
+        app:cornerRadius="30dp"
+        android:layout_margin="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
