@@ -3,63 +3,93 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:padding="18dp"
+    android:background="@drawable/bg_item_cistella">
 
-    <!-- Nombre del evento -->
     <TextView
         android:id="@+id/tvNomEsdeveniment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:fontFamily="@font/roboto_bold"
+        android:textSize="17sp"
         android:textStyle="bold"
         android:textColor="#000000" />
 
-    <!-- Nombre del tipo de entrada -->
     <TextView
         android:id="@+id/tvNomEntrada"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:textSize="14sp"
-        android:textColor="#333333" />
+        android:textColor="#885E9A" />
 
-    <!-- Cantidad, precio unitario y subtotal -->
     <TextView
         android:id="@+id/tvQuantitatPreu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="#1B5E20" />
+        android:layout_marginTop="12dp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#885E9A" />
 
-    <TextView
-        android:id="@+id/tvSeients"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="#333333" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="14dp">
 
-    <!-- Mensaje de error cuando algún asiento de la entrada no estaba disponible -->
-    <TextView
-        android:id="@+id/tvError"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="#B71C1C"
-        android:visibility="gone" />
+        <Button
+            android:id="@+id/btnMenys"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            android:padding="0dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="−"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:backgroundTint="#E7BAF5"
+            android:contentDescription="Disminuir la quantitat" />
 
-    <TextView
-        android:id="@+id/tvError"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="#B71C1C"
-        android:visibility="gone" />
+        <TextView
+            android:id="@+id/tvQuantitat"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="1"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="#000000" />
 
-    <!-- Botón para eliminar la entrada de la cesta -->
-    <Button
-        android:id="@+id/btnEliminarEntrada"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Eliminar" />
+        <Button
+            android:id="@+id/btnMes"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            android:padding="0dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="+"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#885E9A"
+            android:contentDescription="Augmentar la quantitat" />
+
+        <Button
+            android:id="@+id/btnEliminarEntrada"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="12dp"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            android:text="Eliminar"
+            android:textAllCaps="false"
+            android:textColor="#885E9A"
+            android:backgroundTint="#EAD4F1" />
+
+    </LinearLayout>
 
 </LinearLayout>

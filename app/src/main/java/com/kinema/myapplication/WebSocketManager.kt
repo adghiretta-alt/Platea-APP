@@ -9,4 +9,9 @@ object WebSocketManager {
     var respuestaCompra: ((String) -> Unit)? = null
     var respuestaEntrades: ((String) -> Unit)? = null
     var respuestaMapa: ((String) -> Unit)? = null
+
+    // Reconectar desde otra pantalla
+    var reconectar: ((String, String) -> Unit)? = null
+
+    var respuestaCartelera: ((String) -> Unit)? = null
 }
