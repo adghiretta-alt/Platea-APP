@@ -27,43 +27,62 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="34dp"
             android:text="Kinema"
             android:textColor="#4A2C5A"
             android:textSize="40sp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnComprarEntrades"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Les meves entrades" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerSeients"
             android:layout_width="330dp"
             android:layout_height="match_parent"
-            android:layout_margin="50dp" />
+            android:layout_marginBottom="50dp" />
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/btnConfiguracio"
-        android:layout_width="50dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="28dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="Configuració"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:elevation="8dp"
-        android:padding="10dp"
-        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_configuracio"
-        app:tint="#885e9a" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageButton
+            android:id="@+id/btnMisEntrades"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Les meves entrades"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_ticket"
+            app:tint="#885e9a" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="|"
+            android:textColor="#885e9a"
+            android:textSize="24sp"
+            android:layout_marginHorizontal="3dp" />
+
+        <ImageButton
+            android:id="@+id/btnConfiguracio"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Configuració"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_configuracio"
+            app:tint="#885e9a" />
+
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -73,16 +92,16 @@
 
     <Button
         android:id="@+id/btnCistella"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="66dp"
+        android:layout_height="67dp"
+        android:layout_margin="40dp"
+        android:backgroundTint="#885E9A"
         android:text="0"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:backgroundTint="#885E9A"
         app:cornerRadius="30dp"
-        android:layout_margin="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 

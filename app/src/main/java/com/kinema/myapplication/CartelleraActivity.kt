@@ -37,7 +37,7 @@ class CartelleraActivity : AppCompatActivity() {
         btnCistella = findViewById(R.id.btnCistella)
 
         // Botón para consultar las entradas compradas.
-        val btnMisEntrades = findViewById<Button>(R.id.btnComprarEntrades)
+        val btnMisEntrades = findViewById<ImageButton>(R.id.btnMisEntrades)
 
         btnMisEntrades.setOnClickListener {
 
