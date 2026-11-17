@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <!-- Color de fondo de tu caja -->
-    <solid android:color="#D8A4EB" />
+    <solid android:color="#EAD4F1" />
 
     <!-- Radio de las esquinas redondeadas -->
     <corners android:radius="26dp" />
