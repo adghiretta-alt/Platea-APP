@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/edit_color_round_corner_2"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Nombre del evento -->
+    <TextView
+        android:id="@+id/tvNomEsdeveniment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Categoría y Fecha/Hora -->
+    <TextView
+        android:id="@+id/tvDataCategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="#666666"
+        android:textSize="14sp" />
+
+    <!-- Entradas y Precios (se mostrarán desplegadas al hacer clic) -->
+    <TextView
+        android:id="@+id/tvEntrades"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="#1B5E20"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+</LinearLayout>
